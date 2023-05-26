@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const {MONGOURI} = require('./config/keys')
-
+const path = require('path')
 const app = express()
 const port = process.env.PORT || 5000
 
@@ -24,7 +24,7 @@ mongoose.connection.on('error' , (err)=>{
 require('./models/user')
 require('./models/post')
 
-app.use(cors())
+//app.use(cors())
 app.use(express.json())
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
@@ -32,10 +32,10 @@ app.use(require('./routes/user'))
 
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static('Client/build'))
-    const path = require('path')
+    app.use(express.static(path.join(__dirname , "./Client/build")))
+    
     app.get("*" , (req , res)=>{
-        res.sendFile(path.resolve(__dirname , 'Client' , 'build' , 'index.html'))
+        res.sendFile(path.join(__dirname , "./Client/build/index.html"))
     })
 }
 
