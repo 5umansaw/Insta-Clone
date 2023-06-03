@@ -4,7 +4,7 @@ const cors = require('cors')
 const {MONGOURI} = require('./config/keys')
 const path = require('path')
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 
 //username: sumansaw81
 //pass: BwkdJxZYlzmpl6Mb
@@ -33,6 +33,7 @@ app.use(require('./routes/user'))
 
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname , "./Client/build")))
+    console.log("production")
     
     app.get("*" , (req , res)=>{
         res.sendFile(path.join(__dirname , "./Client/build/index.html"))
@@ -40,5 +41,5 @@ if(process.env.NODE_ENV === "production"){
 }
 
 app.listen(port , ()=>{
-    console.log('server is up on 5000')
+    console.log('server is up on 3000')
 })
